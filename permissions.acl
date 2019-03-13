@@ -1,0 +1,251 @@
+
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+  
+rule contractingLoanBankRule {
+  description: "Allow only loan debter and bank to see loan aggrement."
+  participant(m) : "org.svnit.comps.Bank"
+  operation: ALL
+  resource(v): "org.svnit.comps.ContractingLoan"
+  condition: (v.bank.getIdentifier() == m.getIdentifier())
+  action: ALLOW
+}
+
+
+rule loanCreateRule {
+  description: "Allow only bank to create its own asset."
+  participant(m): "org.svnit.comps.Bank"
+  operation: ALL
+  resource(v): "org.svnit.comps.Loan"
+  transaction(tx): "org.svnit.comps.ContractingLoan" 
+  condition: (v.bank.getIdentifier() == m.getIdentifier() && tx.bank.getIdentifier() == m.getIdentifier())
+  action: ALLOW
+}
+
+rule loanBankUpdateRule {
+  description: "Allow only bank to see loan aggrement."
+  participant(m) : "org.svnit.comps.Bank"
+  operation: READ,DELETE
+  resource(v): "org.svnit.comps.Loan"
+  condition: (v.bank.getIdentifier() == m.getIdentifier())
+  action: ALLOW
+}
+
+rule loanPrivateIndividualReadRule {
+  description: "Allow only loan debter and bank to see loan aggrement."
+  participant(m) : "org.svnit.comps.PrivateIndividual"
+  operation: READ
+  resource(v): "org.svnit.comps.Loan"
+  condition: (v.debtor.getIdentifier() == m.getIdentifier())
+  action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+
+rule approvePendingLandTransactoin {
+  description: "Allow only land department to transfer ownership of assets."
+  participant: "org.svnit.comps.LandDepartmentIndividual"
+  operation: ALL
+  resource: "org.svnit.comps.ApprovePendingLandTransaction"
+  action: ALLOW
+}
+
+rule approvePendingLandTransactionRule {
+  description: "Allow only land department to update land while transfer ownership of assets."
+  participant: "org.svnit.comps.LandDepartmentIndividual"
+  operation: UPDATE
+  resource: "org.svnit.comps.Land"
+  transaction: "org.svnit.comps.ApprovePendingLandTransaction" 
+  action: ALLOW
+}
+
+
+rule approvePendingLandTransactionDeleteRule {
+  description: "Allow only land department to update pendingLand while transfer ownership of assets."
+  participant: "org.svnit.comps.LandDepartmentIndividual"
+  operation: ALL
+  resource: "org.svnit.comps.PendingLandTransaction"
+  transaction: "org.svnit.comps.ApprovePendingLandTransaction" 
+  action: ALLOW
+}
+
+rule landDepartmentRule {
+  description: "Allow only land department to update notary."
+  participant: "org.svnit.comps.LandDepartmentIndividual"
+  operation: READ, UPDATE
+  resource: "org.svnit.comps.*" 
+  transaction: "org.svnit.comps.ApprovePendingLandTransaction"
+  action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+
+rule requestLandTransaction {
+  description: "Allow only private individual to create transaction of land."
+  participant: "org.svnit.comps.PrivateIndividual"
+  operation: ALL
+  resource: "org.svnit.comps.RequestLandTransaction"
+  action: ALLOW
+}
+
+rule requestLandTransactionRule {
+  description: ""
+  participant(m): "org.svnit.comps.PrivateIndividual"
+  operation: CREATE
+  resource(v): "org.svnit.comps.PendingLandTransaction"
+  transaction(tx): "org.svnit.comps.RequestLandTransaction" 
+  condition: (m.getIdentifier() != tx.seller.getIdentifier()) 
+  action: ALLOW
+}
+
+rule requestLandTransactionUpdateLandRule {
+  description: ""
+  participant(m): "org.svnit.comps.PrivateIndividual"
+  operation: UPDATE
+  resource(v): "org.svnit.comps.Land"
+  transaction(tx): "org.svnit.comps.RequestLandTransaction" 
+  condition: (m.getIdentifier() != v.owner.getIdentifier()) 
+  action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+
+rule pendingLandTransactionForPrivateIndividualRule {
+  description: "Allow private individual to read its pending land transaction."
+  participant(m): "org.svnit.comps.PrivateIndividual"
+  operation: READ
+  resource(v): "org.svnit.comps.PendingLandTransaction"
+  condition: (v.seller.getIdentifier() == m.getIdentifier() || v.buyer.getIdentifier() == m.getIdentifier()) 
+  action: ALLOW
+}
+
+rule pendingLandTransactionForLandDepartmentRule {
+  description: "Allow land department to read its pending land transaction."
+  participant: "org.svnit.comps.LandDepartmentIndividual"
+  operation: READ
+  resource: "org.svnit.comps.PendingLandTransaction"
+  action: ALLOW
+}
+
+rule pendingLandTransactionForNotaryRule {
+  description: "Allow notary to read its pending land transaction."
+  participant(m): "org.svnit.comps.Notary"
+  operation: READ
+  resource(v): "org.svnit.comps.PendingLandTransaction"
+  condition: (v.notary.getIdentifier() == m.getIdentifier()) 
+  action: ALLOW
+}
+
+
+rule pendingLandTransactionForBankRule {
+  description: "Allow bank to read its pending land transaction."
+  participant(m): "org.svnit.comps.Bank"
+  operation: READ
+  resource(v): "org.svnit.comps.PendingLandTransaction"
+  condition: (v.bank.getIdentifier() == m.getIdentifier()) 
+  action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+
+rule SetLandOnSaleRule {
+	description: "Allow only private individual to Sale"
+  participant: "org.svnit.comps.PrivateIndividual"
+  operation: CREATE
+  resource: "org.svnit.comps.SetLandOnSale" 
+  action: ALLOW
+}
+
+
+
+rule SetLandOnSaleUpdateLandRule {
+	description: "Allow only own land to Sale"
+  participant(m): "org.svnit.comps.PrivateIndividual"
+  operation: UPDATE
+  resource(v): "org.svnit.comps.Land"
+  transaction: "org.svnit.comps.SetLandOnSale" 
+  condition: (v.owner.getIdentifier() == m.getIdentifier()) 
+  action: ALLOW
+}
+
+//---------------------------------------------------------------------------------
+rule landReadRule {
+  description: "Allow all to read ownership of assets."
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: READ
+  resource: "org.svnit.comps.Land"
+  action: ALLOW
+}
+
+rule privateIndividualDetailRule {
+  description: "Allow user to see only his private details"
+  participant(v): "org.svnit.comps.PrivateIndividual"
+  operation: CREATE, READ
+  resource(r): "org.svnit.comps.PrivateIndividual"
+  condition: (r.getIdentifier()==v.getIdentifier()) 
+  action: ALLOW
+}
+
+rule bankDetailRule {
+  description: "Allow bank to see only its private details"
+  participant(v): "org.svnit.comps.Bank"
+  operation: CREATE, READ
+  resource(r): "org.svnit.comps.Bank"
+  condition: (r.getIdentifier()==v.getIdentifier()) 
+  action: ALLOW
+}
+
+rule landDepartmentIndividualDetailRule {
+  description: "Allow land department individual to see only his private details"
+  participant(v): "org.svnit.comps.LandDepartmentIndividual"
+  operation: CREATE, READ
+  resource(r): "org.svnit.comps.LandDepartmentIndividual"
+  condition: (r.getIdentifier()==v.getIdentifier()) 
+  action: ALLOW
+}
+
+rule notaryDetailRule {
+  description: "Allow notary to see only its private details"
+  participant(v): "org.svnit.comps.Notary"
+  operation: CREATE, READ
+  resource(r): "org.svnit.comps.Notary"
+  condition: (r.getIdentifier()==v.getIdentifier()) 
+  action: ALLOW
+}
+
+rule SystemACL {
+    description:  "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

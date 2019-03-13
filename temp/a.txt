@@ -1,0 +1,14 @@
+
+----------------------------------------------
+
+{
+  "$class": "org.svnit.comps.RequestLandTransaction",
+  "land": "resource:org.svnit.comps.Land#10",
+  "buyer": "resource:org.svnit.comps.PrivateIndividual#2",
+  "seller": "resource:org.svnit.comps.PrivateIndividual#1",
+  "loan": "resource:org.svnit.comps.Loan#2101",
+  "agent": "resource:org.svnit.comps.Agent#1",
+  "notary": "resource:org.svnit.comps.Notary#1",
+  "newDocumentSignature": "new"
+}
+------------------------------------------------
