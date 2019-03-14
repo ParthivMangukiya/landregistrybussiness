@@ -8,20 +8,17 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 }
 ' 'http://localhost:3001/api/Agent'
 
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Bank",
   "id": "1",
   "name": "sbi",
   "balance": 1000000000
 }
+' 'http://localhost:3001/api/Bank'
 
-{
-  "$class": "org.svnit.comps.LandDepartmentIndividual",
-  "id": "1",
-  "name": "nirav",
-  "designation": "karamchari"
-}
 
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Notary",
   "id": "1",
@@ -29,24 +26,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "address": "Surat",
   "balance": 10000
 }
+' 'http://localhost:3001/api/Notary'
 
-{
-  "$class": "org.svnit.comps.PrivateIndividual",
-  "id": "1",
-  "name": "parthiv",
-  "address": "Katargam",
-  "balance": 20000
-}
-
-{
-  "$class": "org.svnit.comps.PrivateIndividual",
-  "id": "2",
-  "name": "animesh",
-  "address": "surat",
-  "balance": 20000
-}
-
-
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
   "id": "1",
@@ -57,6 +39,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "state": "notOnSale",
   "owner": "resource:org.svnit.comps.PrivateIndividual#1"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
   "id": "2",
@@ -67,6 +52,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "state": "notOnSale",
   "owner": "resource:org.svnit.comps.PrivateIndividual#1"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
   "id": "3",
@@ -77,6 +65,10 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "state": "notOnSale",
   "owner": "resource:org.svnit.comps.PrivateIndividual#1"
 }
+
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
   "id": "4",
@@ -87,6 +79,10 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "state": "notOnSale",
   "owner": "resource:org.svnit.comps.PrivateIndividual#2"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
+
 {
   "$class": "org.svnit.comps.Land",
   "id": "5",
@@ -97,6 +93,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "state": "notOnSale",
   "owner": "resource:org.svnit.comps.PrivateIndividual#2"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.ContractingLoan",
   "debtor": "resource:org.svnit.comps.PrivateIndividual#2",
@@ -105,6 +104,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "interestRate": 0.1,
   "durationInMonths": 20
 }
+' 'http://localhost:3001/api/ContractingLoan'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.ContractingLoan",
   "debtor": "resource:org.svnit.comps.PrivateIndividual#2",
@@ -113,6 +115,9 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "interestRate": 0.1,
   "durationInMonths": 18
 }
+' 'http://localhost:3001/api/ContractingLoan'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.ContractingLoan",
   "debtor": "resource:org.svnit.comps.PrivateIndividual#1",
@@ -121,17 +126,4 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
   "interestRate": 0.1,
   "durationInMonths": 10
 }
-
-----------------------------------------------
-
-{
-  "$class": "org.svnit.comps.RequestLandTransaction",
-  "land": "resource:org.svnit.comps.Land#10",
-  "buyer": "resource:org.svnit.comps.PrivateIndividual#2",
-  "seller": "resource:org.svnit.comps.PrivateIndividual#1",
-  "loan": "resource:org.svnit.comps.Loan#2101",
-  "agent": "resource:org.svnit.comps.Agent#1",
-  "notary": "resource:org.svnit.comps.Notary#1",
-  "newDocumentSignature": "new"
-}
-------------------------------------------------
+' 'http://localhost:3001/api/ContractingLoan'
