@@ -1,0 +1,26 @@
+/**
+ * New query file
+ */
+
+query selectLands {
+  description: "Select all lands"
+  statement:
+      SELECT org.svnit.comps.Land
+}
+
+query selectLand {
+  description: "Select lands"
+  statement:
+      SELECT org.svnit.comps.Land
+  		WHERE (id == _$id)
+}
+
+query selectHistorian {
+  description: "Select history"
+  statement:
+  	SELECT org.hyperledger.composer.system.HistorianRecord
+  	WHERE (
+      transactionType == "org.hyperledger.composer.system.AddAsset" OR
+      transactionType == "org.hyperledger.composer.system.UpdateAsset" OR
+      transactionType == "org.hyperledger.composer.system.RemoveAsset")
+}

@@ -24,52 +24,50 @@ participant PrivateIndividual identified by id {
   o String id
   o String name
   o String address
-  o Double balance default = 0.0
-}
-
-participant Bank identified by id {
-  o String id
-  o String name
-  o Double balance default = 0.0
+  o Double balance default = 0.0 optional
 }
 
 participant Notary identified by id {
   o String id
   o String name
   o String address
-  o Double balance default = 0.0
+  o Double balance default = 0.0 optional
 }
 
 participant Agent identified by id {
   o String id
   o String name
-  o Double balance default = 0.0
+  o Double balance default = 0.0 optional
   o Double feeRate
 }
 
+  //state notOnSale,onSale,inTrasit
+  
 asset Land identified by id {
   o String id
   o String address
   o Double squareMeters
   o Double price
   o String documentSignature
-  o String state
+  o String state default="notOnSale" optional
   --> PrivateIndividual owner
 }
 
-//state notOnSale,onSale,inTrasit
+//state requestedNotary, requestedBuyer,
+// requestedSeller, requestedLandDepartment
   
 asset PendingLandTransaction identified by id {
   o String id
   --> Land land
   --> PrivateIndividual buyer
   --> PrivateIndividual seller
-  --> Loan loan
   --> Agent agent
   --> Notary notary
-  o String newDocumentSignature
+  o String state default="requestedNotary" optional
+  o String newDocumentSignature default="" optional
 }
-  
+
+  /*
 asset Loan identified by id {
    o String id
    o Double amount
@@ -79,22 +77,46 @@ asset Loan identified by id {
   --> Land land
    o Integer durationInMonths
 }
+*/
   
 transaction RequestLandTransaction {
   --> Land land
   --> PrivateIndividual buyer
   --> PrivateIndividual seller
-  --> Loan loan
   --> Agent agent
   --> Notary notary
-  o String newDocumentSignature
-}  
+}
 
+transaction SetLandOnSale {
+  --> Land land
+}
+ 
+transaction ApprovePendingLandTransactionBuyer {
+	--> PendingLandTransaction pendingLandTransaction
+  	o String newDocumentSignature
+  	o Boolean approve
+}
+  
+transaction ApprovePendingLandTransactionSeller {
+  	--> PendingLandTransaction pendingLandTransaction
+  	o String newDocumentSignature
+  	o Boolean approve
+}
+  
+transaction ApprovePendingLandTransactionNotary {
+  	--> PendingLandTransaction pendingLandTransaction
+  	o String newDocumentSignature
+  	o Boolean approve
+}
+  
 transaction ApprovePendingLandTransaction {
   --> PendingLandTransaction pendingLandTransaction
+  o String newDocumentSignature
   o Boolean approve
 }
   
+
+  /*
 transaction ContractingLoan {
   --> PrivateIndividual debtor
   --> Bank bank
@@ -102,8 +124,16 @@ transaction ContractingLoan {
   o Double interestRate
   o Integer durationInMonths
 }
+  */
+
+
+
   
-transaction SetLandOnSale {
-  --> Land land
+//transaction temp {
+//}
+ 
+@commit(false)
+@returns(String)
+transaction getLandHistoryForId {
+  o String landId
 }
-  

@@ -1,3 +1,5 @@
+composer card delete -c admin@landregistry
+
 composer network install --card PeerAdmin@hlfv1 --archiveFile landregistry@0.0.2.bna
 
 composer network start --networkName landregistry --networkVersion 0.0.2 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
@@ -18,7 +20,7 @@ export COMPOSER_PROVIDERS='{
       "failureRedirect": "/"
     }
 }'
-#composer-rest-server -c admin@landregistry -n never -a true -m true -u true -d n &
+#composer-rest-server -c admin@landregistry -n never -a true -m true -u true -d n 
 
-#composer-rest-server -c admin@landregistry -n never -u true -p 3001 &
+#composer-rest-server -c admin@landregistry -n never -u true -p 3001 
 

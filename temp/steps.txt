@@ -7,11 +7,8 @@ yo hyperledger-composer:businessnetwork
 
 composer archive create -t dir -n .
 */
-composer network install --card PeerAdmin@hlfv1 --archiveFile landregistry@0.0.2.bna
-
-
-composer network start --networkName landregistry --networkVersion 0.0.2 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
-
+composer network install --card PeerAdmin@hlfv1 --archiveFile landregistry@0.0.6.bna
+composer network start --networkName landregistry --networkVersion 0.0.6 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 
 composer card import --file networkadmin.card
 
@@ -38,3 +35,12 @@ composer-rest-server
 
   composer-rest-server -c admin@landregistry -n never -u true -p 3001
 
+
+docker logs -f dev-peer0.org1.example.com-landregistry-0.0.3-deploy3 2>&1 | grep @debug
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
+   "$class": "org.svnit.comps.getLandHistoryForId", \ 
+   "landId": "1", \ 
+   "transactionId": null, \ 
+   "timestamp": "2019-05-06T17:20:30.480Z" \  
+ }' 'http://localhost:3000/api/getLandHistoryForId'

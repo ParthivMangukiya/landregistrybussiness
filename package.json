@@ -3,7 +3,7 @@
     "composer": "^0.20.4"
   },
   "name": "landregistry",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "This project intends to demonstrate land transfer",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/landregistry.bna",
@@ -19,21 +19,22 @@
   "email": "parthivm20@gmail.com",
   "license": "Apache-2.0",
   "devDependencies": {
-    "composer-admin": "^0.20.7",
-    "composer-cli": "^0.20.7",
-    "composer-client": "^0.20.7",
-    "composer-common": "^0.20.7",
-    "composer-connector-embedded": "^0.20.7",
-    "composer-cucumber-steps": "^0.20.7",
     "chai": "latest",
     "chai-as-promised": "latest",
+    "composer-admin": "^0.20.8",
+    "composer-cli": "^0.20.8",
+    "composer-client": "^0.20.8",
+    "composer-common": "^0.20.8",
+    "composer-connector-embedded": "^0.20.8",
+    "composer-cucumber-steps": "^0.20.8",
     "cucumber": "^5.1.0",
     "eslint": "latest",
-    "nyc": "latest",
     "mkdirp": "latest",
-    "mocha": "latest"
+    "mocha": "^6.1.4",
+    "nyc": "latest"
   },
   "dependencies": {
-    "acorn-jsx": "^5.0.1"
+    "acorn-jsx": "^5.0.1",
+    "passport-github": "^1.1.0"
   }
 }

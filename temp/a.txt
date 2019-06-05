@@ -1,137 +1,74 @@
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Agent",
-  "id": "1",
-  "name": "sureshbhai",
+  "id": "7001",
+  "name": "nirav",
   "balance": 10000,
   "feeRate": 0.1
 }
 ' 'http://localhost:3001/api/Agent'
 
-{
-  "$class": "org.svnit.comps.Bank",
-  "id": "1",
-  "name": "sbi",
-  "balance": 1000000000
-}
-
-{
-  "$class": "org.svnit.comps.LandDepartmentIndividual",
-  "id": "1",
-  "name": "nirav",
-  "designation": "karamchari"
-}
-
-{
-  "$class": "org.svnit.comps.Notary",
-  "id": "1",
-  "name": "jasmin",
-  "address": "Surat",
-  "balance": 10000
-}
-
-{
-  "$class": "org.svnit.comps.PrivateIndividual",
-  "id": "1",
-  "name": "parthiv",
-  "address": "Katargam",
-  "balance": 20000
-}
-
-{
-  "$class": "org.svnit.comps.PrivateIndividual",
-  "id": "2",
-  "name": "animesh",
-  "address": "surat",
-  "balance": 20000
-}
-
-
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
-  "id": "1",
+  "id": "9001",
   "address": "land1",
   "squareMeters": 200,
   "price": 2000,
   "documentSignature": "l1",
   "state": "notOnSale",
-  "owner": "resource:org.svnit.comps.PrivateIndividual#1"
+  "owner": "resource:org.svnit.comps.PrivateIndividual#1001"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
-  "id": "2",
+  "id": "9002",
   "address": "land2",
   "squareMeters": 200,
   "price": 2000,
   "documentSignature": "l2",
   "state": "notOnSale",
-  "owner": "resource:org.svnit.comps.PrivateIndividual#1"
+  "owner": "resource:org.svnit.comps.PrivateIndividual#1001"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
-  "id": "3",
+  "id": "9003",
   "address": "land3",
   "squareMeters": 200,
   "price": 2000,
   "documentSignature": "l3",
   "state": "notOnSale",
-  "owner": "resource:org.svnit.comps.PrivateIndividual#1"
+  "owner": "resource:org.svnit.comps.PrivateIndividual#1001"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
-  "id": "4",
+  "id": "9004",
   "address": "land4",
   "squareMeters": 200,
   "price": 2000,
   "documentSignature": "l4",
   "state": "notOnSale",
-  "owner": "resource:org.svnit.comps.PrivateIndividual#2"
+  "owner": "resource:org.svnit.comps.PrivateIndividual#1002"
 }
+' 'http://localhost:3001/api/Land'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '
 {
   "$class": "org.svnit.comps.Land",
-  "id": "5",
+  "id": "9005",
   "address": "land5",
   "squareMeters": 200,
   "price": 2000,
   "documentSignature": "l5",
   "state": "notOnSale",
-  "owner": "resource:org.svnit.comps.PrivateIndividual#2"
+  "owner": "resource:org.svnit.comps.PrivateIndividual#1002"
 }
-{
-  "$class": "org.svnit.comps.ContractingLoan",
-  "debtor": "resource:org.svnit.comps.PrivateIndividual#2",
-  "bank": "resource:org.svnit.comps.Bank#1",
-  "land": "resource:org.svnit.comps.Land#1",
-  "interestRate": 0.1,
-  "durationInMonths": 20
-}
-{
-  "$class": "org.svnit.comps.ContractingLoan",
-  "debtor": "resource:org.svnit.comps.PrivateIndividual#2",
-  "bank": "resource:org.svnit.comps.Bank#1",
-  "land": "resource:org.svnit.comps.Land#2",
-  "interestRate": 0.1,
-  "durationInMonths": 18
-}
-{
-  "$class": "org.svnit.comps.ContractingLoan",
-  "debtor": "resource:org.svnit.comps.PrivateIndividual#1",
-  "bank": "resource:org.svnit.comps.Bank#1",
-  "land": "resource:org.svnit.comps.Land#4",
-  "interestRate": 0.1,
-  "durationInMonths": 10
-}
-
-----------------------------------------------
-
-{
-  "$class": "org.svnit.comps.RequestLandTransaction",
-  "land": "resource:org.svnit.comps.Land#10",
-  "buyer": "resource:org.svnit.comps.PrivateIndividual#2",
-  "seller": "resource:org.svnit.comps.PrivateIndividual#1",
-  "loan": "resource:org.svnit.comps.Loan#2101",
-  "agent": "resource:org.svnit.comps.Agent#1",
-  "notary": "resource:org.svnit.comps.Notary#1",
-  "newDocumentSignature": "new"
-}
-------------------------------------------------
+' 'http://localhost:3001/api/Land'
