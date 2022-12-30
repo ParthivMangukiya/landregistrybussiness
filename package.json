@@ -30,7 +30,7 @@
     "cucumber": "^5.1.0",
     "eslint": "latest",
     "mkdirp": "latest",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "nyc": "latest"
   },
   "dependencies": {
